@@ -29,7 +29,11 @@
 
     <script>
       const db = firebase.firestore();
-      
+
+      $('#send').click(function(){
+        db.collection('product').add({ '제목' : $('#title').val() })
+      });
+
     </script>
 </body>
 </html>

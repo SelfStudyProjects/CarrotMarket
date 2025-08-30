@@ -28,7 +28,41 @@
     </script>
 
     <script>
-      const db = firebase
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+
+      $('#register').click(function(){
+        var email = $('#email').val();
+        var password = $('#password').val();
+
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+          console.log('User created:', user);
+        })
+        .catch((error) => {
+          console.error('Error creating user:', error);
+        });
+      });
+
+      $('#send').click(function(){
+
+        var file = document.querySelector('#photo').files[0];
+        var storageRef = storage.ref('test/'+file.name);
+        var uploadTask = storageRef.child('test/'+file.name).put(file);
+        var 업로드작업 = uploadTask.put(file);
+
+        업로드작업.on( 'state_changed',
+          null,
+          (error) => {
+            console.error('Upload failed:', error);
+          },
+          () => {
+            console.log('Upload successful!');
+          })
+        })
+
     </script>
 </body>
 </html>
